@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+  - 2.3.1
+env:
+  - RCOV=true
+services:
+  - mongodb
+notifications:
+  email:
+    - shhavel@gmail.com
