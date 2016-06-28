@@ -6,10 +6,10 @@ set :root, File.expand_path('..', File.dirname(__FILE__))
 disable :show_exceptions
 
 Mongoid.load!(File.join(settings.root, 'config', 'mongoid.yml'), settings.environment)
-Dir[File.join(settings.root, 'config', 'initializers', '*.rb')].sort.each { |f| require f }
-Dir[File.join(settings.root, 'app', 'models', '**', '*.rb')].each do |file|
+Dir[File.join(settings.root, 'app', '{models,workers}', '**', '*.rb')].each do |file|
   autoload File.basename(file, '.rb').camelize.to_sym, file
 end
+Dir[File.join(settings.root, 'config', 'initializers', '*.rb')].sort.each { |f| require f }
 
 use Rack::PostBodyContentTypeParser
 use Rack::Cors do

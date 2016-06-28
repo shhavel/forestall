@@ -22,6 +22,8 @@ GEM
     builder (3.2.2)
     byebug (9.0.5)
     coderay (1.1.1)
+    concurrent-ruby (1.0.2)
+    connection_pool (2.2.0)
     coveralls (0.8.13)
       json (~> 1.8)
       simplecov (~> 0.11.0)
@@ -67,6 +69,9 @@ GEM
       rack (>= 1.0)
     railroady (1.5.1)
     rake (10.4.2)
+    redis (3.3.0)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -79,11 +84,19 @@ GEM
     rspec-mocks (3.4.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
+    rspec-sidekiq (2.2.0)
+      rspec (~> 3.0, >= 3.0.0)
+      sidekiq (>= 2.4.0)
     rspec-support (3.4.1)
     rspec_api_documentation (4.8.0)
       activesupport (>= 3.0.0)
       mustache (~> 1.0, >= 0.99.4)
       rspec (~> 3.0, >= 3.0.0)
+    settingslogic (2.0.9)
+    sidekiq (4.1.2)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      redis (~> 3.2, >= 3.2.1)
     simplecov (0.11.2)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -125,8 +138,12 @@ DEPENDENCIES
   rack-test
   railroady
   rake
+  redis-namespace
   rspec
+  rspec-sidekiq
   rspec_api_documentation
+  settingslogic
+  sidekiq
   simplecov
   sinatra
   sinatra-param

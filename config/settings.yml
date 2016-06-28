@@ -1,0 +1,9 @@
+development:
+  redis:
+    url: 'redis://localhost:6379/0'
+    namespace: 'forestall'
+
+test:
+  redis:
+    url: 'redis://localhost:6379/0'
+    namespace: 'forestall'

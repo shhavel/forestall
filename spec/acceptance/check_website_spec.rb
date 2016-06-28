@@ -49,7 +49,7 @@ resource 'Check Website' do
 
     example 'Enroll a website for checking on any malicious scripts' do
       explanation 'Send to the server page URL, its content and all JS'
-      allow_any_instance_of(SourceCode).to receive(:sleep).with(60)
+      Sidekiq::Testing.fake!
       do_request(key: session.key, site: {
         url: 'http://example.com',
         scripts_attributes: [
@@ -57,13 +57,14 @@ resource 'Check Website' do
           { name: 'http://example.com/javascripts/jqery.js', type: 'javascript', content: '123' }
         ]
       })
+      Sidekiq::Testing.inline!
       expect(status).to eq(201)
       expect(parsed_json).to eq({
         type: 'sites',
         id: Site.last._id.to_s,
         attributes: {
           url: 'http://example.com',
-          state: 'malicious'
+          state: 'processing'
         }
       })
     end

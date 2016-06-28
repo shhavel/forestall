@@ -18,6 +18,8 @@ require File.expand_path('../../application', __FILE__)
 
 FactoryGirl.find_definitions
 
+Sidekiq::Testing.inline!
+
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|

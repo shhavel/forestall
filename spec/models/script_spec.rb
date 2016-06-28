@@ -14,11 +14,12 @@ RSpec.describe Script, type: :model do
     before { allow_any_instance_of(SourceCode).to receive(:sleep).with(60) }
 
     it 'analyzes source code by type and content and assigns state' do
+      subject.reload
       is_expected.to be_safe
     end
 
     it "assigns site's state if all it's scripts are processed" do
-      expect(subject.site).to be_safe
+      expect(subject.site.reload).to be_safe
     end
 
     context "some of site's scripts are not processed" do
