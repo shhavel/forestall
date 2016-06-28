@@ -6,9 +6,9 @@ resource 'Check Website' do
     parameter :key, 'Unique client key', required: true
     parameter :url, 'Website URL to check for malicious scripts', scope: :site, required: true
     parameter :scripts_attributes, 'Web page source code (with all JS) to make ckeck of', scope: :site, required: true
-    parameter :name, 'Script name', scope: :'scripts_attributes[]', required: true
-    parameter :type, 'Script type can by one of "html" or "javascript"', scope: :'scripts_attributes[]', required: true
-    parameter :content, 'Script content', scope: :'scripts_attributes[]', required: true
+    parameter :name, 'Script name', scope: :'site[scripts_attributes][]', required: true
+    parameter :type, 'Script type can by one of "html" or "javascript"', scope: :'site[scripts_attributes][]', required: true
+    parameter :content, 'Script content', scope: :'site[scripts_attributes][]', required: true
     let(:raw_post) { params.to_json }
     let(:session) { Session.create(browser: 'test') }
 

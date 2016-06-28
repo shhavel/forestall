@@ -150,7 +150,7 @@ table th, table td {
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">scripts_attributes[][name]</span>
+                    <span class="name">site[scripts_attributes][][name]</span>
                 </td>
                 <td>
                   <span class="description">Script name</span>
@@ -158,7 +158,7 @@ table th, table td {
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">scripts_attributes[][type]</span>
+                    <span class="name">site[scripts_attributes][][type]</span>
                 </td>
                 <td>
                   <span class="description">Script type can by one of &quot;html&quot; or &quot;javascript&quot;</span>
@@ -166,7 +166,7 @@ table th, table td {
               </tr>
               <tr>
                 <td class="required">
-                    <span class="name">scripts_attributes[][content]</span>
+                    <span class="name">site[scripts_attributes][][content]</span>
                 </td>
                 <td>
                   <span class="description">Script content</span>
@@ -186,16 +186,16 @@ table th, table td {
 
 
             <h4>Body</h4>
-            <pre class="request body">{"key":"57728f5e6a122fff29473d90","site":{"url":"http://example.com","scripts_attributes":[{"name":"Page Content","type":"html","content":"\u003chtml\u003econtent\u003c/html\u003e"},{"name":"http://example.com/javascripts/jqery.js","type":"javascript","content":"123"}]}}</pre>
+            <pre class="request body">{"key":"5772b01e6a122f4004bb43c7","site":{"url":"http://example.com","scripts_attributes":[{"name":"Page Content","type":"html","content":"\u003chtml\u003econtent\u003c/html\u003e"},{"name":"http://example.com/javascripts/jqery.js","type":"javascript","content":"123"}]}}</pre>
 
             <h4>cURL</h4>
-            <pre class="request curl">curl &quot;http://localhost:9292/api/v1/sites&quot; -d &#39;{&quot;key&quot;:&quot;57728f5e6a122fff29473d90&quot;,&quot;site&quot;:{&quot;url&quot;:&quot;http://example.com&quot;,&quot;scripts_attributes&quot;:[{&quot;name&quot;:&quot;Page Content&quot;,&quot;type&quot;:&quot;html&quot;,&quot;content&quot;:&quot;\u003chtml\u003econtent\u003c/html\u003e&quot;},{&quot;name&quot;:&quot;http://example.com/javascripts/jqery.js&quot;,&quot;type&quot;:&quot;javascript&quot;,&quot;content&quot;:&quot;123&quot;}]}}&#39; -X POST \
+            <pre class="request curl">curl &quot;http://localhost:9292/api/v1/sites&quot; -d &#39;{&quot;key&quot;:&quot;5772b01e6a122f4004bb43c7&quot;,&quot;site&quot;:{&quot;url&quot;:&quot;http://example.com&quot;,&quot;scripts_attributes&quot;:[{&quot;name&quot;:&quot;Page Content&quot;,&quot;type&quot;:&quot;html&quot;,&quot;content&quot;:&quot;\u003chtml\u003econtent\u003c/html\u003e&quot;},{&quot;name&quot;:&quot;http://example.com/javascripts/jqery.js&quot;,&quot;type&quot;:&quot;javascript&quot;,&quot;content&quot;:&quot;123&quot;}]}}&#39; -X POST \
 	-H &quot;Content-Type: application/json&quot;</pre>
 
             <h3>Response</h3>
               <h4>Headers</h4>
               <pre class="response headers">Content-Type: application/json
-Content-Length: 110
+Content-Length: 111
 Vary: Origin
 X-Content-Type-Options: nosniff</pre>
             <h4>Status</h4>
@@ -203,10 +203,10 @@ X-Content-Type-Options: nosniff</pre>
               <h4>Body</h4>
               <pre class="response body">{
   &quot;type&quot;: &quot;sites&quot;,
-  &quot;id&quot;: &quot;57728f5e6a122fff29473d92&quot;,
+  &quot;id&quot;: &quot;5772b01e6a122f4004bb43c9&quot;,
   &quot;attributes&quot;: {
     &quot;url&quot;: &quot;http://example.com&quot;,
-    &quot;state&quot;: &quot;malicious&quot;
+    &quot;state&quot;: &quot;processing&quot;
   }
 }</pre>
       </div>
