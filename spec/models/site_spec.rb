@@ -3,6 +3,8 @@ require 'spec_helper'
 RSpec.describe Site, type: :model do
   it { is_expected.to have_field(:url).of_type(String) }
   it_behaves_like 'state machine'
+  it { is_expected.to have_index_for(session_id: 1) }
+  it { is_expected.to have_index_for(session_id: 1, url: 1).with_options(unique: true) }
 
   it { is_expected.to belong_to(:session).of_type(Session) }
   it { is_expected.to have_many(:scripts).of_type(Script) }

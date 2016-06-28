@@ -2,6 +2,7 @@ class Script
   include Mongoid::Document
   include StateMachine
   field :name, type: String
+  index({ site_id: 1 })
 
   before_save :assign_source_code
   after_save :async_analyze_source_code!, unless: :skip_analyze_source_code

@@ -4,6 +4,7 @@ RSpec.describe SourceCode, type: :model do
   it { is_expected.to have_field(:type).of_type(String) }
   it { is_expected.to have_field(:content).of_type(String) }
   it_behaves_like 'state machine'
+  it { is_expected.to have_index_for(type: 1, content: 1).with_options(unique: true) }
 
   it { is_expected.to have_many(:scripts).of_type(Script) }
 

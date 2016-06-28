@@ -3,6 +3,7 @@ require 'spec_helper'
 RSpec.describe Script, type: :model do
   it { is_expected.to have_field(:name).of_type(String) }
   it_behaves_like 'state machine'
+  it { is_expected.to have_index_for(site_id: 1) }
 
   it { is_expected.to belong_to(:site).of_type(Site) }
   it { is_expected.to belong_to(:source_code).of_type(SourceCode) }

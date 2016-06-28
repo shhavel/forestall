@@ -2,6 +2,7 @@ class Site
   include Mongoid::Document
   include StateMachine
   field :url, type: String
+  index({ session_id: 1 })
   index({ session_id: 1, url: 1 }, { unique: true })
 
   belongs_to :session
