@@ -3,13 +3,13 @@ class SourceCodeAnalyzer
 
   sidekiq_options queue: :analyze_source_code, retry: 5
 
-  def perform(script_id)
-    $logger.info "#<Script _id: #{script_id}> processing..."
-    script = Script.find(script_id)
-    script.analyze_source_code!
+  def perform(site_id)
+    $logger.info "#<Site _id: #{site_id}> processing..."
+    site = Site.find(site_id)
+    site.analyze!
 
-    if !script.site.reload.processing? && (sockets = Sinatra::Application.sockets[script.site.session.key]).present?
-      msg = "URL #{script.site.url} is #{script.site.state}"
+    if (sockets = Sinatra::Application.sockets[site.session.key]).present?
+      msg = "URL #{site.url} is #{site.state}"
       sockets.each { |s| s.send(msg) }
     end
   end

@@ -5,27 +5,18 @@ class Script
   index({ site_id: 1 })
 
   before_save :assign_source_code
-  after_save :async_analyze_source_code!, unless: :skip_analyze_source_code
 
   belongs_to :site
   belongs_to :source_code
 
   validates_presence_of :name
-  validates_inclusion_of :type, in: %w(html javascript), unless: :skip_analyze_source_code
-  validates_presence_of :content, unless: :skip_analyze_source_code
-  attr_accessor :type, :content, :skip_analyze_source_code
-
-  def async_analyze_source_code!
-    SourceCodeAnalyzer.perform_async(self.id.to_s)
-  end
+  validates_inclusion_of :type, in: %w(html javascript), unless: :source_code
+  validates_presence_of :content, unless: :source_code
+  attr_accessor :type, :content
 
   def analyze_source_code!
     self.source_code.analyze!
-    self.skip_analyze_source_code = true
     self.update_attribute(:state, self.source_code.state)
-    if self.site.scripts.none?(&:processing?)
-      self.site.update_attribute(:state, self.site.scripts.all?(&:safe?) ? 'safe' : 'malicious')
-    end
   end
 
   private

@@ -13,7 +13,6 @@ class SourceCode
 
   def analyze!
     return true unless processing?
-    sleep 60
     processed_state = (self.content.size % 2 == 0) ? 'safe' : 'malicious'
     update_attribute(:state, processed_state)
   end

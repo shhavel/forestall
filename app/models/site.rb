@@ -21,4 +21,14 @@ class Site
       }
     }
   end
+
+  def analyze!
+    sleep 60
+    self.scripts.each(&:analyze_source_code!)
+    update_attribute(:state, self.scripts.all?(&:safe?) ? 'safe' : 'malicious')
+  end
+
+  def async_analyze!
+    SourceCodeAnalyzer.perform_async(self.id.to_s)
+  end
 end

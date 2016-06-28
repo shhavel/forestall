@@ -13,13 +13,8 @@ get '/api/v1/sessions/:key' do
     session.to_json
   else
     request.websocket do |ws|
-      ws.onopen do
-        settings.sockets[session.key] ||= []
-        settings.sockets[session.key] << ws
-      end
-      ws.onclose do
-        settings.sockets[session.key].delete(ws)
-      end
+      ws.onopen { settings.sockets[session.key] << ws }
+      ws.onclose { settings.sockets[session.key].delete(ws) }
     end
   end
 end
@@ -30,6 +25,7 @@ post '/api/v1/sites' do
   session = Session.find(params[:key])
   status 201
   site = session.sites.create!(params[:site])
+  site.async_analyze!
   site.to_json
 end
 

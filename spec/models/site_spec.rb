@@ -26,4 +26,47 @@ RSpec.describe Site, type: :model do
       })
     end
   end
+
+  describe '#analyze!' do
+    context 'Session web sockets are present' do
+      let(:session) { create(:session) }
+      let(:site) { create(:site, session: session) }
+      let(:socket) { double('socket') }
+      before do
+        create(:script, site: site, content: '1234')
+        create(:script, site: site, content: '1234')
+        allow_any_instance_of(Site).to receive(:sleep).with(60)
+        Sinatra::Application.sockets[session.key] = [socket]
+      end
+
+      it "assigns site's state to 'safe' if all of sorce codes are safe" do
+        site.analyze!
+        expect(site.state).to eq('safe')
+      end
+
+      it "assigns site's state to 'malicious' if at least one of sorce_code is malicious" do
+        create(:script, site: site, content: '123')
+        site.analyze!
+        expect(site.state).to eq('malicious')
+      end
+    end
+  end
+
+  describe '#async_analyze!' do
+    context 'Session web sockets are present' do
+      let(:session) { create(:session) }
+      let(:site) { create(:site, session: session) }
+      let!(:script) { create(:script, site: site) }
+      let(:socket) { double('socket') }
+      before do
+        allow_any_instance_of(Site).to receive(:sleep).with(60)
+        Sinatra::Application.sockets[session.key] = [socket]
+      end
+
+      it 'notifies web sockets that were binded to the current session' do
+        expect(socket).to receive(:send).with('URL http://example.com is safe')
+        site.async_analyze!
+      end
+    end
+  end
 end

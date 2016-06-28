@@ -5,6 +5,7 @@ puts "Loaded #{settings.environment} environment"
 set :root, File.expand_path('..', File.dirname(__FILE__))
 disable :show_exceptions
 set :sockets, {}
+settings.sockets.default_proc = proc { |hash, key| hash[key] = [] }
 
 Mongoid.load!(File.join(settings.root, 'config', 'mongoid.yml'), settings.environment)
 Dir[File.join(settings.root, 'app', '{models,workers}', '**', '*.rb')].each do |file|
