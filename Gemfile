@@ -11,6 +11,7 @@ gem 'pry', require: false
 gem 'settingslogic'
 gem 'sidekiq'
 gem 'redis-namespace'
+gem 'sinatra-websocket'
 
 group :development, :test do
   gem 'thin'

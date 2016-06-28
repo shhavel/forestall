@@ -15,7 +15,7 @@ class Script
   attr_accessor :type, :content, :skip_analyze_source_code
 
   def async_analyze_source_code!
-    SourceCodeAnalyzer.perform_async(self.id)
+    SourceCodeAnalyzer.perform_async(self.id.to_s)
   end
 
   def analyze_source_code!

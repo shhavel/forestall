@@ -36,5 +36,19 @@ RSpec.describe Script, type: :model do
         expect(script.site).to be_processing
       end
     end
+
+    context 'Session web sockets are present' do
+      let(:session) { create(:session) }
+      let(:site) { create(:site, session: session) }
+      let(:socket) { double('socket') }
+      before do
+        Sinatra::Application.sockets[session.key] = [socket]
+      end
+
+      it 'notifies web sockets that were binded to the current session' do
+        expect(socket).to receive(:send).with('URL http://example.com is safe')
+        create(:script, site: site)
+      end
+    end
   end
 end

@@ -8,7 +8,20 @@ end
 
 get '/api/v1/sessions/:key' do
   param :key, String, required: true, blank: false
-  Session.find(params[:key]).to_json
+  session = Session.find(params[:key])
+  if !request.websocket?
+    session.to_json
+  else
+    request.websocket do |ws|
+      ws.onopen do
+        settings.sockets[session.key] ||= []
+        settings.sockets[session.key] << ws
+      end
+      ws.onclose do
+        settings.sockets[session.key].delete(ws)
+      end
+    end
+  end
 end
 
 post '/api/v1/sites' do

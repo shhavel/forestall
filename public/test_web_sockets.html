@@ -1,0 +1,33 @@
+<html>
+  <body>
+     <h1>Session WebSocket</h1>
+     <form id="form">
+       <input type="text" id="key" placeholder="session key"></input>
+       <input type="submit" value="Submit"/>
+     </form>
+     <div id="msgs"></div>
+  </body>
+
+  <script type="text/javascript">
+    window.onload = function(){
+      (function(){
+        var show = function(el) {
+          return function(msg) { el.innerHTML = el.innerHTML + '<br/>' + msg; }
+        }(document.getElementById('msgs'));
+
+        var sender = function(f){
+          var sessionKey = document.getElementById('key');
+          sessionKey.onclick = function(){ sessionKey.value = "" };
+          f.onsubmit    = function(){
+            show('ws://localhost:9292/api/v1/sessions/' + sessionKey.value);
+            var ws       = new WebSocket('ws://localhost:9292/api/v1/sessions/' + sessionKey.value);
+            ws.onopen    = function()  { show('websocket opened'); };
+            ws.onclose   = function()  { show('websocket closed'); }
+            ws.onmessage = function(m) { show('websocket message: ' +  m.data); };
+            return false;
+          }
+        }(document.getElementById('form'));
+      })();
+    }
+  </script>
+</html>
