@@ -29,7 +29,7 @@ RSpec.describe Site, type: :model do
 
   describe '#analyze!' do
     context 'Session web sockets are present' do
-      let(:session) { create(:session) }
+      let(:session) { create(:session, safe_sites_count: 10, malicious_sites_count: 1) }
       let(:site) { create(:site, session: session) }
       let(:socket) { double('socket') }
       before do
@@ -44,10 +44,21 @@ RSpec.describe Site, type: :model do
         expect(site.state).to eq('safe')
       end
 
+      it "increments session safe_sites_count if all of sorce codes are safe" do
+        site.analyze!
+        expect(session.reload.safe_sites_count).to eq(11)
+      end
+
       it "assigns site's state to 'malicious' if at least one of sorce_code is malicious" do
         create(:script, site: site, content: '123')
         site.analyze!
         expect(site.state).to eq('malicious')
+      end
+
+      it "increments session malicious_sites_count if at least one of sorce_code is malicious" do
+        create(:script, site: site, content: '123')
+        site.analyze!
+        expect(session.reload.malicious_sites_count).to eq(2)
       end
     end
   end

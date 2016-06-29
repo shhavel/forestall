@@ -38,6 +38,8 @@ class Site
 
   private
     def assign_state
-      update_attribute(:state, self.scripts.all?(&:safe?) ? 'safe' : 'malicious')
+      site_state = self.scripts.all?(&:safe?) ? 'safe' : 'malicious'
+      update_attribute(:state, site_state)
+      self.session.inc(:"#{site_state}_sites_count" => 1)
     end
 end
