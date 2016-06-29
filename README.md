@@ -1,6 +1,7 @@
 # Forestall [![Build Status](https://travis-ci.org/shhavel/forestall.svg?branch=master)](https://travis-ci.org/shhavel/forestall) [![Coverage Status](https://coveralls.io/repos/github/shhavel/forestall/badge.svg?branch=master)](https://coveralls.io/github/shhavel/forestall?branch=master)
 
-Server API to check websites for malicious content. Check [API Documentation](http://shhavel.github.io/)
+Server API to check websites for malicious content. Check [API Documentation](http://shhavel.github.io/).
+Check [test coverage](http://shhavel.github.io/coverage/#_AllFiles)
 
 ## Models diagram
 

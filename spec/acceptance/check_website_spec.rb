@@ -68,6 +68,33 @@ resource 'Check Website' do
         }
       })
     end
+
+    context 'All source code elements have already been analyzed' do
+      before do
+        create(:source_code, type: 'html', content: '<html>content</html>').analyze!
+        create(:source_code, type: 'javascript', content: '1234').analyze!
+      end
+
+      example 'Enroll a website for checking and get processed state immediately if source code have already been analysed' do
+        explanation 'Send to the server page URL, its content and all JS'
+        do_request(key: session.key, site: {
+          url: 'http://example.com',
+          scripts_attributes: [
+            { name: 'Page Content', type: 'html', content: '<html>content</html>' },
+            { name: 'http://example.com/javascripts/jqery.js', type: 'javascript', content: '1234' }
+          ]
+        })
+        expect(status).to eq(201)
+        expect(parsed_json).to eq({
+          type: 'sites',
+          id: Site.last._id.to_s,
+          attributes: {
+            url: 'http://example.com',
+            state: 'safe'
+          }
+        })
+      end
+    end
   end
 
   get '/api/v1/sites/:id' do

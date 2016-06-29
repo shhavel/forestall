@@ -23,5 +23,6 @@ class Script
     def assign_source_code
       return unless self.type && self.content
       self.source_code = SourceCode.find_or_create_by(type: self.type, content: self.content)
+      self.state = self.source_code.state
     end
 end

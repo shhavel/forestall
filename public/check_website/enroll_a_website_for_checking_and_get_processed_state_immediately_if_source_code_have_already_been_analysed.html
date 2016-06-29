@@ -109,10 +109,10 @@ table th, table td {
       <h1>Check Website API</h1>
 
       <div class="article">
-        <h2>Parameter url cannot be blank to make check</h2>
+        <h2>Enroll a website for checking and get processed state immediately if source code have already been analysed</h2>
         <h3>POST /api/v1/sites</h3>
           <p class="explanation">
-            Checking a website for malicious scripts requires site URL.
+            Send to the server page URL, its content and all JS
           </p>
 
           <h3>Parameters</h3>
@@ -186,27 +186,27 @@ table th, table td {
 
 
             <h4>Body</h4>
-            <pre class="request body">{"key":"57736ace6a122f44e241dc20","site":{"url":""}}</pre>
+            <pre class="request body">{"key":"57736ace6a122f44e241dc2a","site":{"url":"http://example.com","scripts_attributes":[{"name":"Page Content","type":"html","content":"\u003chtml\u003econtent\u003c/html\u003e"},{"name":"http://example.com/javascripts/jqery.js","type":"javascript","content":"1234"}]}}</pre>
 
             <h4>cURL</h4>
-            <pre class="request curl">curl &quot;http://localhost:9292/api/v1/sites&quot; -d &#39;{&quot;key&quot;:&quot;57736ace6a122f44e241dc20&quot;,&quot;site&quot;:{&quot;url&quot;:&quot;&quot;}}&#39; -X POST \
+            <pre class="request curl">curl &quot;http://localhost:9292/api/v1/sites&quot; -d &#39;{&quot;key&quot;:&quot;57736ace6a122f44e241dc2a&quot;,&quot;site&quot;:{&quot;url&quot;:&quot;http://example.com&quot;,&quot;scripts_attributes&quot;:[{&quot;name&quot;:&quot;Page Content&quot;,&quot;type&quot;:&quot;html&quot;,&quot;content&quot;:&quot;\u003chtml\u003econtent\u003c/html\u003e&quot;},{&quot;name&quot;:&quot;http://example.com/javascripts/jqery.js&quot;,&quot;type&quot;:&quot;javascript&quot;,&quot;content&quot;:&quot;1234&quot;}]}}&#39; -X POST \
 	-H &quot;Content-Type: application/json&quot;</pre>
 
             <h3>Response</h3>
               <h4>Headers</h4>
               <pre class="response headers">Content-Type: application/json
-Content-Length: 68
+Content-Length: 105
 Vary: Origin
 X-Content-Type-Options: nosniff</pre>
             <h4>Status</h4>
-            <pre class="response status">422 Unprocessable Entity</pre>
+            <pre class="response status">201 Created</pre>
               <h4>Body</h4>
               <pre class="response body">{
-  &quot;message&quot;: &quot;Url can&#39;t be blank&quot;,
-  &quot;errors&quot;: {
-    &quot;url&quot;: [
-      &quot;can&#39;t be blank&quot;
-    ]
+  &quot;type&quot;: &quot;sites&quot;,
+  &quot;id&quot;: &quot;57736ace6a122f44e241dc2c&quot;,
+  &quot;attributes&quot;: {
+    &quot;url&quot;: &quot;http://example.com&quot;,
+    &quot;state&quot;: &quot;safe&quot;
   }
 }</pre>
       </div>
